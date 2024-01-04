@@ -119,10 +119,10 @@ void loop() {
   // set the LED cloud to show device connected to Arduino
   if (ArduinoCloud.connected() == 0) {
     iOT_Connected = false;  // this sets the cloud LED as green
-    title_label();
+    //title_label();
   } else {
     iOT_Connected = true;  // this sets the cloud LED as red
-    title_label();
+    //title_label();
   }
   
 } // loop()

@@ -9,8 +9,8 @@
 lv_obj_t * labelMeterHum;                         // LVGL meter label library object
 lv_obj_t * labelMeterTemp;                        // LVGL meter label library object
 
-static lv_obj_t * meterHum;
-static lv_meter_indicator_t * indicHum;
+static lv_obj_t * meterHum;                       // humidity meter
+static lv_meter_indicator_t * indicHum;           // indicator for humidity meter
 
 // set the meter needle and label value
 static void setValueHum(void * indicHum, int32_t v) {
@@ -79,8 +79,8 @@ void createMeterHumidty(void) {
 **************************************************************************************/
 
 // set up the two meters
-static lv_obj_t * meterTemp;
-static lv_meter_indicator_t * indicTemp;
+static lv_obj_t * meterTemp;                         // temperature meter 
+static lv_meter_indicator_t * indicTemp;             // indicator needle for meter
 
 // set the meter needle and label depending on the value
 static void setValueTemp(void * indicTemp, int32_t v) {

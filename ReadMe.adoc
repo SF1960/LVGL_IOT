@@ -7,7 +7,12 @@
 = Project: {Project}
 
 Connecting a GIGA R1 with Display Shield to Arduino IOT
-Using LVGL widgets
+Using LVGL widgets to display 2 meters, 1 roller, 4 buttons, 1 LED and a label
+The device connects to the internet and Arduino IOT using hard-wired WiFi credentials
+The IOT controls the 2 meters and when connected lights the LED.
+The roller controls the IOT widget
+The buttons feedback to the IOT
+
 
 == Step 1: Installation
 
@@ -25,9 +30,12 @@ Using LVGL widgets
   ├── meters.h            => local library to manage the meters
   ├── roller.h            => local library to manage the roller
   ├── title.h             => local library to manage the title label
+  ├── led.h               => local library to manage the LED
   ├── arduino_secrest.h   => local library for WiFi credentials
   ├── thingProperties.h   => local library provided by Arduino
+  ├── README.md           => GitHub readme file
   └── ReadMe.adoc         => this file
+
 ....
 
 === License

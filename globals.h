@@ -4,19 +4,28 @@
 * GLOBAL VARIABLES AND CONSTANTS
 **************************************************************************/
 
+int height = 0;                        // the screen's height
+int width = 0;                         // the screen's width
+
+// colour definitions
 #define WHITE 0xffffff
 #define BLACK 0x000000
 #define ARDUINO 0x03989e
 #define GRID 0x046f87
+#define DARKGREY 0x6b6e73
+#define LIGHTGREY 0xa7a7a8
 
+// title definitions
 #define TITLE_X -280
 #define TITLE_Y -170
 
+// button definitions
 #define BUTTON1_LABEL "FAN"
 #define BUTTON2_LABEL "O/S LAMP"
 #define BUTTON3_LABEL "XMAS TREE"
 #define BUTTON4_LABEL "HEATING"
 
+// meter 1 definitions
 #define METER1_LABEL "Temperature : "
 #define METER1_LABEL_OFFSET -35
 #define METER1_MIN 0
@@ -33,6 +42,7 @@
 #define METER1_ANGLE 270
 #define METER1_ROTATION 135
 
+// meter 2 definitions
 #define METER2_LABEL "Humidity : "
 #define METER2_LABEL_OFFSET -35
 #define METER2_MIN 0
@@ -41,6 +51,7 @@
 #define METER2_ANGLE 270
 #define METER2_ROTATION 135
 
+// roller definitions
 #define ROLLER_X 250
 #define ROLLER_Y 100
 #define ROLLER_W 110
@@ -49,18 +60,18 @@
 #define ROLLER_LABEL "Fan Speed"
 #define ROLLER_Y_OFFSET 40
 
-#define LED_ON_X -280
-#define LED_ON_Y -100
-#define LED_ON_BRIGHTNESS 150
-#define LED_ON_LABEL "IOT Connected"
-#define LED_OFF_X 150
-#define LED_OFF_Y 100
-#define LED_OFF_BRIGHTNESS 50
-#define LED_OFF_LABEL "IOT DISCONNECTED"
+// LED definitions
+#define LED_X -335
+#define LED_Y -100
+#define LED_BRIGHTNESS 150
+#define LED_LABEL "Connected"
+#define LED_LABEL_OFFSET_X 10
 
+// screen definitions
 #define BRIGHTNESS 40              // start up brightness (0 to 100)
 #define MAX_BRIGHTNESS 90          // maximum allowed screen brightness
 #define MIN_BRIGHTNESS 10          // minumum allowed screen brightness
 
+// default definitions
 #define STARTUP_TEMP 22            // default meter temperature reading
 #define STARTUP_HUM 85             // default meter humidity reading

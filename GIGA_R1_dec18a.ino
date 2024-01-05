@@ -24,8 +24,9 @@
 /***************************************************************************************
 * Description:  Connecting a GIGA R1 with Display Sheild to Ardunio IOT. Using LVLG widgets
 * Sketch:       GIGA_R1_dec18a.ino
-* Version:      1.0
-* Version Desc: Default version. 2 meters for temp and hum. 4 buttons. 1 roller. 1 label
+* Version:      2.0 
+* Version Desc: 1.0 Default version. 2 meters for temp and hum. 4 buttons. 1 roller. 1 label
+*               2.0 adding an LED to the GIGA shield to show Arduino Connection
 * Board:        GIGA R1 with Display Shield
 * Author:       steve fuller
 * Website:      sgfpcb@gmail.com
@@ -46,6 +47,7 @@
 #include "meters.h"
 #include "roller.h"
 #include "title.h"
+#include "led.h"
 
 // Create screen objects
 Arduino_H7_Video Display(800, 480, GigaDisplayShield); /* Arduino_H7_Video Display(1024, 768, USBCVideo); */
@@ -59,24 +61,26 @@ GigaDisplayBacklight backlight;
 ***************************************************************************/
 
 void setup() {
-  // Initialize serial and wait for port to open:
-  Serial.begin(115200);
-  // This delay gives the chance to wait for a Serial Monitor without blocking if none is found
-  delay(1500);
+
+  Serial.begin(115200);              // Initialize serial and wait for port to open:
+  delay(1500);                       // This delay gives the chance to wait for a Serial Monitor
 
   Display.begin();
   TouchDetector.begin();
   backlight.begin();
   backlight.set(BRIGHTNESS);
 
+  width = Display.width();
+  height = Display.height();
+
   //set up screen
   lv_obj_t* screen = lv_obj_create(lv_scr_act());
-  lv_obj_set_size(screen, Display.width(), Display.height());
+  lv_obj_set_size(screen, width, height);
   lv_obj_set_style_bg_color(screen, lv_color_hex(ARDUINO), LV_PART_MAIN);
-  static lv_coord_t col_dsc[] = { 800, LV_GRID_TEMPLATE_LAST };  // was 500
-  static lv_coord_t row_dsc[] = { 480, LV_GRID_TEMPLATE_LAST };  // was 400
+  static lv_coord_t col_dsc[] = { width, LV_GRID_TEMPLATE_LAST }; // was 800
+  static lv_coord_t row_dsc[] = { height, LV_GRID_TEMPLATE_LAST }; // was 480
 
-  // draw lvgl widgets and set Cloud variables
+  // draw lvgl widgets
   btnRelay_1();
   btnRelay_2();
   btnRelay_3();
@@ -101,9 +105,9 @@ void setup() {
   setDebugMessageLevel(2);
   ArduinoCloud.printDebugInfo();
 
-  Serial.println("*****************");
-  Serial.println("SET UP COMPLETED");
-  Serial.println("*****************");
+  Serial.println("********************");
+  Serial.println("* SET UP COMPLETED *");
+  Serial.println("********************");
 
 } // setup()
 
@@ -118,11 +122,11 @@ void loop() {
 
   // set the LED cloud to show device connected to Arduino
   if (ArduinoCloud.connected() == 0) {
-    iOT_Connected = false;  // this sets the cloud LED as green
-    //title_label();
+    iOT_Connected = false;               // this sets the cloud LED as green
+    disconnectedLED();                   // show the disconnected LED
   } else {
-    iOT_Connected = true;  // this sets the cloud LED as red
-    //title_label();
+    iOT_Connected = true;                // this sets the cloud LED as red
+    connectedLED();                      // show the connected LED
   }
   
 } // loop()
@@ -145,13 +149,11 @@ void onFloatKitchenHumidityChange() {
 
 // update Cloud and Display when fan speed variable changes
 void onFanSpeedChange() {
-  // Add your code here to act upon FanSpeed change
   Serial.print("Fan Speed: ");
   Serial.println(fanSpeed.getBrightness());
   Serial.print("Fan Switch: ");
   Serial.println(fanSpeed.getSwitch());
-  if (fanSpeed.getSwitch() == 1 ? relay_1 = true : relay_1 = false)
-    ;
+  if (fanSpeed.getSwitch() == 1 ? relay_1 = true : relay_1 = false);
 }
 
 // update Cloud and Display when relay 1 variable changes
@@ -164,6 +166,7 @@ void onRelay1Change() {
     fanSpeed.setSwitch(false);
     relay_1 = false;
   }
+
 }
 
 void onRelay2Change() {
@@ -175,10 +178,5 @@ void onRelay3Change() {
 void onRelay4Change() {
 }
 
-/*
-  Since IOTConnected is READ_WRITE variable, onIOTConnectedChange() is
-  executed every time a new value is received from IoT Cloud.
-*/
 void onIOTConnectedChange() {
-  // Add your code here to act upon IOTConnected change
 }

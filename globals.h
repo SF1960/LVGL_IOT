@@ -61,11 +61,28 @@ int width = 0;                         // the screen's width
 #define ROLLER_Y_OFFSET 40
 
 // LED definitions
-#define LED_X -335
-#define LED_Y -100
-#define LED_BRIGHTNESS 150
-#define LED_LABEL "Connected"
-#define LED_LABEL_OFFSET_X 10
+#define LED_CONNECTED_X -335
+#define LED_CONNECTED_Y -100
+#define LED_CONNECTED_TRUE_COLOUR LV_PALETTE_GREEN
+#define LED_CONNECTED_FALSE_COLOUR LV_PALETTE_RED
+#define LED_CONNECTED_BRIGHTNESS 150
+#define LED_CONNECTED_LABEL "Connected"
+#define LED_CONNECTED_LABEL_OFFSET_X 10
+
+// Switch state
+#define LED_SWITCH_X -335
+#define LED_SWITCH_Y -50
+#define LED_SWITCH_TRUE_COLOUR LV_PALETTE_BLUE
+#define LED_SWITCH_FALSE_COLOUR LV_PALETTE_RED
+#define LED_SWITCH_BRIGHTNESS 150
+#define LED_SWITCH_LABEL "Switch"
+#define LED_SWITCH_LABEL_OFFSET_X 10
+
+// Switch definitions
+#define SWITCH_X -200
+#define SWITCH_Y -50
+#define SWITCH_LABEL "On Off"
+bool swStatus = false;
 
 // screen definitions
 #define BRIGHTNESS 40              // start up brightness (0 to 100)
@@ -73,5 +90,5 @@ int width = 0;                         // the screen's width
 #define MIN_BRIGHTNESS 10          // minumum allowed screen brightness
 
 // default definitions
-#define STARTUP_TEMP 22            // default meter temperature reading
-#define STARTUP_HUM 85             // default meter humidity reading
+#define STARTUP_TEMP 0             // default meter temperature reading
+#define STARTUP_HUM 0              // default meter humidity reading

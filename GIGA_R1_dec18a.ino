@@ -15,6 +15,7 @@
   CloudLight relay_3;
   CloudLight relay_4;
   bool iOT_Connected;
+  bool switch1;
 
   Variables which are marked as READ/WRITE in the Cloud Thing will also have functions
   which are called when their values are changed from the Dashboard.
@@ -24,9 +25,10 @@
 /***************************************************************************************
 * Description:  Connecting a GIGA R1 with Display Sheild to Ardunio IOT. Using LVLG widgets
 * Sketch:       GIGA_R1_dec18a.ino
-* Version:      2.0 
+* Version:      2.1
 * Version Desc: 1.0 Default version. 2 meters for temp and hum. 4 buttons. 1 roller. 1 label
 *               2.0 adding an LED to the GIGA shield to show Arduino Connection
+*               2.1 added switch to control an led both locally and remotely
 * Board:        GIGA R1 with Display Shield
 * Author:       steve fuller
 * Website:      sgfpcb@gmail.com
@@ -38,16 +40,18 @@
 #include <Arduino_GigaDisplayTouch.h>
 #include <Arduino_GigaDisplay.h>
 #include <ArduinoGraphics.h>
+#include <WiFi.h>
+#include <lvgl.h>
 
 // Program Libraries
 #include "thingProperties.h"
-#include "lvgl.h"
 #include "globals.h"
 #include "buttons.h"
 #include "meters.h"
 #include "roller.h"
 #include "title.h"
 #include "led.h"
+#include "switch.h"
 
 // Create screen objects
 Arduino_H7_Video Display(800, 480, GigaDisplayShield); /* Arduino_H7_Video Display(1024, 768, USBCVideo); */
@@ -89,6 +93,8 @@ void setup() {
   createMeterTemperature();
   lv_fan_roller();
   title_label();
+  createLEDSwitch(false);
+  createSwitch(false);
 
   delay(2000);
 
@@ -179,4 +185,26 @@ void onRelay4Change() {
 }
 
 void onIOTConnectedChange() {
+}
+
+
+/*
+  Since Switch1 is READ_WRITE variable, onSwitch1Change() is
+  executed every time a new value is received from IoT Cloud.
+*/
+void onSwitch1Change()  {
+  // Add your code here to act upon Switch1 change
+
+  if (swStatus == true){
+    createLEDSwitch(false);
+    createSwitch(false);
+    swStatus = false;
+  }else{
+    createSwitch(true);
+    createLEDSwitch(true);
+    swStatus = true;
+  }
+
+  Serial.print("onSwitch1Change: "); Serial.println(swStatus);
+
 }
